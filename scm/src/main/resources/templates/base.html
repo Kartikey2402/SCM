@@ -1,0 +1,13 @@
+<!-- Sabhi pr css apply krne ke liye alg alg code likhna pdega isliye hm fragment bnayenge jiski wjh se sbhi ke liye alg alg css nhi likhni pdegi using thymeleaf fragments-->
+
+<div class="parent_fragment" th:fragment="parent(content)">
+    <h1>This is parent Fragment</h1>
+    <!-- here the value which i pass from the other page is getting -->
+    <!-- <h2>Value of x is <span th:text="${x}"></span></h2>
+    <h2>Value of x is <span th:text="${y}"></span></h2> -->
+    <div th:replace="${content}"></div>
+</div>
+
+<div th:fragment="test(content)">
+    <div th:replace="${content}"></div>
+</div>
