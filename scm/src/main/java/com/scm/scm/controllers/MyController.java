@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MyController {
+    // Home page
     @RequestMapping("home")
     public String home(Model model) {
         model.addAttribute("name", "Kartikey singh");
@@ -28,5 +29,27 @@ public class MyController {
         System.out.println("Services page loading");
         return "services";
     }
+
+    // contact page
+    @RequestMapping("/contact")
+    public String contactPage(){
+        System.out.println("Contact page loading");
+        return "contact";
+    }
+    
+    // Login page
+    @RequestMapping("/login")
+    public String loginPage(){
+        System.out.println("Login page loading");
+        return "login";
+    }
+
+    //Register page
+    @RequestMapping("/register")
+    public String registerPage(){
+        System.out.println("Register page loading");
+        return "register";
+    }
+
     
 }
