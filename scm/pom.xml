@@ -46,6 +46,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+	<!-- This allowed user page can be accessed only after login -->
+	<dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-starter-security</artifactId>
+    	<version>3.3.4</version>
+	</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -3,6 +3,7 @@ package com.scm.scm.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.scm.scm.helper.MessageType;
 import com.scm.scm.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 
 
@@ -78,22 +80,14 @@ public class MyController {
     //processing register 
     @RequestMapping(value = "/do-register", method=RequestMethod.POST)
     
-    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session){
+    public String processRegister(@Valid @ModelAttribute UserForm userForm, BindingResult rBindingResult, HttpSession session){
         System.out.println(userForm);
         // fetch the form data
-        // validate form data
-        // save to database
-        //   userService
-        //userForm -> User
-        // User user = User.builder()
-        // .name(userForm.getName())
-        // .email(userForm.getEmail())
-        // .password(userForm.getPassword())
-        // .about(userForm.getAbout())
-        // .phoneNumber(userForm.getPhoneNumber())
-        // .profilePic("https://www.google.com/url?sa=i&url=https%3A%2F%2Farchive.org%2Fdetails%2Fwhatsapp-smiling-guy-i-accidentally-made&psig=AOvVaw2u_M3Sn5jxiZM-SCYZHuJ1&ust=1727982451358000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCYmLqy8IgDFQAAAAAdAAAAABAW")
-        // .
-        // build();
+        // validate form data...if error then don't proceed further
+        if(rBindingResult.hasErrors()){
+            return "register";
+        }
+        // else proceed the registration
         User user = new User();
         user.setName(userForm.getName());
         user.setEmail(userForm.getEmail());
