@@ -18,6 +18,8 @@ import com.scm.scm.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -26,6 +28,12 @@ public class MyController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/home";
+    }
+    
 
     // Home page
     @RequestMapping("home")
@@ -91,6 +99,7 @@ public class MyController {
         User user = new User();
         user.setName(userForm.getName());
         user.setEmail(userForm.getEmail());
+        user.setPhoneNumber(userForm.getPhoneNumber());
         user.setPassword(userForm.getPassword());
         user.setAbout(userForm.getAbout());
         user.setProfilePic("https://www.google.com/url?sa=i&url=https%3A%2F%2Farchive.org%2Fdetails%2Fwhatsapp-smiling-guy-i-accidentally-made&psig=AOvVaw2u_M3Sn5jxiZM-SCYZHuJ1&ust=1727982451358000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCYmLqy8IgDFQAAAAAdAAAAABAW");
