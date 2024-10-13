@@ -13,7 +13,7 @@ public class UserController {
 
     //user dashboard
 
-    @RequestMapping(value = "/dashBoard", method=RequestMethod.GET)
+    @RequestMapping(value = "/dashBoard", method=RequestMethod.POST)
     public String userDashboard() {
         return "user/dashBoard";
     }

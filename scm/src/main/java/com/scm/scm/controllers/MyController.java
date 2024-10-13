@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,8 @@ import com.scm.scm.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -36,7 +39,7 @@ public class MyController {
     
 
     // Home page
-    @RequestMapping("home")
+    @RequestMapping("/home")
     public String home(Model model) {
         model.addAttribute("name", "Kartikey singh");
         model.addAttribute("leetcode", "https://leetcode.com/u/kartikey732/");
@@ -59,14 +62,15 @@ public class MyController {
     }
 
     // contact page
-    @RequestMapping("/contact")
+    @GetMapping("/contact")
     public String contactPage(){
         System.out.println("Contact page loading");
         return "contact";
     }
     
     // Login page
-    @RequestMapping("/login")
+    
+    @GetMapping("/login")
     public String loginPage(){
         System.out.println("Login page loading");
         return "login";
