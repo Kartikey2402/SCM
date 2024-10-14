@@ -66,6 +66,8 @@ public class MyController {
         System.out.println("Contact page loading");
         return "contact";
     }
+
+    // this is showing login page
     
     // Login page
     
@@ -74,6 +76,8 @@ public class MyController {
         System.out.println("Login page loading");
         return "login";
     }
+
+    // this is registration view 
 
     //Register page
     @GetMapping("/register")
