@@ -2,8 +2,11 @@ package com.scm.scm.config;
 
 
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.Customizer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,7 +16,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.scm.scm.services.impl.SecurityCustomUserDetailService;
 
@@ -25,6 +28,9 @@ public class SecurityConfig {
 
     @Autowired
     private SecurityCustomUserDetailService userDetailService;
+
+    @Autowired
+    private OAuthenticationSuccessHandler handler;
 
     // configuration of authentication provider for spring security
 
@@ -96,6 +102,11 @@ public class SecurityConfig {
             logoutForm.logoutSuccessUrl("/login?logout=true");
         });
 
+        // oauth configurations
+        httpSecurity.oauth2Login(oauth->{
+            oauth.loginPage("/login");
+            oauth.successHandler(handler);
+        });
 
         return httpSecurity.build();
     }
