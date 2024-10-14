@@ -38,17 +38,59 @@ public class OAuthenticationSuccessHandler implements AuthenticationSuccessHandl
                 logger.info("OAuthenticationSuccessHandler");
 
                 // identify the provider
-                var oauth2AuthenticationToken = (OAuth2AuthenticationToken)authentication.getPrincipal();
-                String authorizedClientRegistration = oauth2AuthenticationToken.getAuthorizedClientRegistrationId();
+                var oauth2AuthenticationToken = (OAuth2AuthenticationToken)authentication;
+                String authorizedClientRegistrationId = oauth2AuthenticationToken.getAuthorizedClientRegistrationId();
 
-                //google 
+                logger.info(authorizedClientRegistrationId);
+
+                //fetching the attributes
+
+                var oauthUser = (DefaultOAuth2User)authentication.getPrincipal();
+                oauthUser.getAttributes().forEach((key, value)->{
+                    logger.info(key + " : " + value);
+                });
+
+                
+                User user = new User();
+                user.setUserId(UUID.randomUUID().toString());
+                user.setRoleList(List.of(AppConstants.ROLE_USER));
+                user.setEmailVerified(true);
+                user.setEnabled(true);
+                user.setPassword("dummy");
+                if(authorizedClientRegistrationId.equalsIgnoreCase("google")){
+
+                    //google and google attributes
+                    user.setEmail(oauthUser.getAttribute("email").toString());
+                    user.setProfilePic(oauthUser.getAttribute("picture").toString());
+                    user.setName(oauthUser.getAttribute("name").toString());
+                    user.setProviderUserId(oauthUser.getName());
+                    user.setProvider(Providers.GOOGLE);
+                    user.setAbout("This account is created using google");
 
 
-                //github login
+                }
+                else if(authorizedClientRegistrationId.equalsIgnoreCase("github")){
 
+                    //github and github attributes
+                    String email = oauthUser.getAttribute("email")!=null? oauthUser.getAttribute("email").toString() : oauthUser.getAttribute("login").toString()+"@gmail.com";
+                    String picture = oauthUser.getAttribute("avatar_url").toString();
+                    String name = oauthUser.getAttribute("login").toString();
+                    String providerUserId = oauthUser.getName();
+                     user.setEmail(email);
+                     user.setProfilePic(picture);
+                     user.setName(name);
+                     user.setProviderUserId(providerUserId);
+                     user.setProvider(Providers.GITHUB);
+                     user.setAbout("This account is created using github");
 
+                }
 
+                else{
+                    logger.info("OAuthAuthenticationSuccessHandler: Unknown provider");
+                }
                 //facebook login
+
+                //save the user
 
                 /* 
                 DefaultOAuth2User user = (DefaultOAuth2User)authentication.getPrincipal();
@@ -87,6 +129,13 @@ public class OAuthenticationSuccessHandler implements AuthenticationSuccessHandl
                     logger.info("User saved: " + email);
                 }
                 */
+
+                //save the user
+                User user2 = userRepo.findByEmail(user.getEmail()).orElse(null);
+                if(user2 == null){
+                    userRepo.save(user);
+                    
+                }
 
                 new  DefaultRedirectStrategy().sendRedirect(request, response, "/user/profile");
         
