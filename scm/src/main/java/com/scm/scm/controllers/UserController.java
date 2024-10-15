@@ -2,12 +2,17 @@ package com.scm.scm.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.scm.scm.entities.User;
 import com.scm.scm.helper.Helper;
+import com.scm.scm.services.UserService;
 
 
 
@@ -18,9 +23,14 @@ public class UserController {
 
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    @Autowired
+    private UserService userService;
+
+    
+
     //user dashboard
 
-    @RequestMapping(value = "/dashBoard", method=RequestMethod.POST)
+    @RequestMapping(value = "/dashBoard")
     public String userDashboard() {
         return "user/dashBoard";
     }
@@ -28,12 +38,8 @@ public class UserController {
     //User profile page
 
     @RequestMapping(value = "/profile", method=RequestMethod.GET)
-    public String userProfile(Authentication authentication) {
+    public String userProfile(Model model,Authentication authentication) {
         
-        String username = Helper.getEmailOfLoggedInUser(authentication);
-        logger.info("User logged in:{} ", username);
-
-        //database se user ko fetch kr skte hain
         return "user/profile";
     }
     
