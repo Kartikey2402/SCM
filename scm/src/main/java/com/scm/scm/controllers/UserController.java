@@ -37,7 +37,7 @@ public class UserController {
 
     //User profile page
 
-    @RequestMapping(value = "/profile", method=RequestMethod.GET)
+    @RequestMapping(value = "/profile")
     public String userProfile(Model model,Authentication authentication) {
         
         return "user/profile";

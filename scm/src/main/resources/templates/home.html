@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+ th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
 
 <head>
     <title>Home</title>
@@ -8,17 +9,13 @@
 </head>
 
 <body>
-    <div class="container text-3xl bg-red-200  p-10 mx-auto mt-4">
-        <!--data-th-text and th:text both can be used -->
-        <h1>Welcome, <span class="text-2xl font-mono" th:text="${name}">Name</span></h1>
-        <a th:href="${leetcode}"><button class="px-1 py-1 rounded bg-blue-700 text-white hover:bg-red-400">Visit my
-                LeetCode Profile</button></a>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In accusamus quod voluptatum quia dolorem, quibusdam
-            </p>
+    <div id="content">
+        <h1>Welcome to home page</h1>
     </div>
-    <!-- flow bite content -->
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    <script>
+        console.log("Home page");
+    </script>
 </body>
 
 </html>
