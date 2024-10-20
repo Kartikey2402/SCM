@@ -3,7 +3,6 @@ package com.scm.scm.entities;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.springframework.boot.autoconfigure.task.TaskSchedulingProperties.Simple;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
