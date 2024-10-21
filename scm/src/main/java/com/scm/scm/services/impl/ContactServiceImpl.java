@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.scm.scm.entities.Contacts;
+import com.scm.scm.entities.User;
 import com.scm.scm.helper.ResourceNotFoundException;
 import com.scm.scm.repositories.ContactRepo;
 import com.scm.scm.services.ContactServices;
@@ -58,6 +59,12 @@ public class ContactServiceImpl implements ContactServices{
     public List<Contacts> getByUserid(String userId) {
         
         return contactRepo.findByUserId(userId);
+    }
+
+    @Override
+    public List<Contacts> getByUser(User user) {
+
+        return contactRepo.findByUser(user);
     }
 
 }

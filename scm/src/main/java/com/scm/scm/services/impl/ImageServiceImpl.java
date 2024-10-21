@@ -1,8 +1,9 @@
 package com.scm.scm.services.impl;
 
 import java.io.IOException;
-import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,8 @@ import com.scm.scm.services.ImageService;
 @Service
 public class ImageServiceImpl implements ImageService{
 
+    private Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
+
     private Cloudinary cloudinary;
 
     public ImageServiceImpl(Cloudinary cloudinary) {
@@ -24,25 +27,24 @@ public class ImageServiceImpl implements ImageService{
     @Override
     public String uploadImage(MultipartFile contactImage, String filename){
 
-        // code jo image ko upload jkr rha ho server pr
+        // code jo image ko upload kr rha ho server pr
 
         try {
-            byte[] data = new byte[contactImage.getInputStream().available()];
-            contactImage.getInputStream().read(data);
+            byte[] data = contactImage.getBytes();
+            // contactImage.getInputStream().read(data);
             cloudinary.uploader().upload(data, ObjectUtils.asMap(
                 "public_id", filename
             ));
+            // and return the url
             return this.getUrlFromPublicId(filename);
 
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error occurred during image upload", e);
             return null;
            
         }
 
-
-        // and return the url
         
     }
 

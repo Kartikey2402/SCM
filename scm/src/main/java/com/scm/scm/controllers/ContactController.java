@@ -1,5 +1,6 @@
 package com.scm.scm.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ import com.scm.scm.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+
 
 
 @Controller
@@ -104,5 +106,20 @@ public class ContactController {
         .build());
         return "redirect:/user/contact/add";
     }
+
+    // view contacts
+    @RequestMapping("/contacts")  
+    public String viewContacts(Model model ,Authentication authentication){
+
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+
+        User user = userService.getUserByEmail(username);
+        logger.info("logged in user:{}", user);
+        List<Contacts> contacts = contactService.getByUserid(user.getUserId());
+        logger.info("fetched contacts:{} ",contacts);
+        model.addAttribute("contacts", contacts);
+        return "user/contacts";
+    }
+    
 
 }

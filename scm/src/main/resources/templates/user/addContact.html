@@ -141,6 +141,8 @@
                                     type="file"
                                 >
                                 <img src="" class="max-h-40 mx-auto rounded-lg shadow mt-1" id="upload_image_preview" alt="">
+                                <p class="text-red-500" th:if="${#fields.hasErrors('contactImage')}" th:errors="*{contactImage}">
+                                    Invalid Image file</p>
 
                             </div>
                             <!-- Favourite contact -->
