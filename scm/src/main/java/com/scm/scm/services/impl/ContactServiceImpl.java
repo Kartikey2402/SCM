@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.scm.scm.entities.Contacts;
@@ -49,11 +53,7 @@ public class ContactServiceImpl implements ContactServices{
         
     }
 
-    @Override
-    public List<Contacts> search(String name, String email, String phoneNumber) {
-        
-        throw new UnsupportedOperationException();
-    }
+    
 
     @Override
     public List<Contacts> getByUserid(String userId) {
@@ -62,9 +62,30 @@ public class ContactServiceImpl implements ContactServices{
     }
 
     @Override
-    public List<Contacts> getByUser(User user) {
+    public Page<Contacts> getByUser(User user,int page, int size,String sortBy, String direction) {
 
-        return contactRepo.findByUser(user);
+        Sort sort = direction.equals("desc")? Sort.by(sortBy).descending(): Sort.by(sortBy).ascending();
+        var pageable = PageRequest.of(page,size,sort);
+        return contactRepo.findByUser(user,pageable);
     }
 
+    @Override
+    public Page<Contacts> searchByName(String nameKeyword, int size, int page, String sortBy, String direction) {
+        
+        Sort sort = direction.equals("desc")? Sort.by(sortBy).descending(): Sort.by(sortBy).ascending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepo.findByNameContaining(nameKeyword, pageable);
+    }
+
+    @Override
+    public Page<Contacts> searchByPhoneNumber(String phoneNumber, int size, int page, String sortBy, String direction) {
+        
+    }
+
+    @Override
+    public Page<Contacts> searchByEmail(String email, int size, int page, String sortBy, String direction) {
+        
+    }
+
+    
 }

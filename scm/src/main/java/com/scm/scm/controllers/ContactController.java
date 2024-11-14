@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +14,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.scm.scm.entities.Contacts;
 import com.scm.scm.entities.User;
 import com.scm.scm.forms.ContactForm;
+import com.scm.scm.helper.AppConstants;
 import com.scm.scm.helper.Helper;
 import com.scm.scm.helper.Message;
 import com.scm.scm.helper.MessageType;
@@ -109,16 +113,37 @@ public class ContactController {
 
     // view contacts
     @RequestMapping("/contacts")  
-    public String viewContacts(Model model ,Authentication authentication){
+    public String viewContacts(
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE+"") int size,
+        @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+        @RequestParam(value = "direction", defaultValue = "asc") String direction
+        ,Model model ,Authentication authentication){
 
         String username = Helper.getEmailOfLoggedInUser(authentication);
 
         User user = userService.getUserByEmail(username);
         logger.info("logged in user:{}", user);
-        List<Contacts> contacts = contactService.getByUserid(user.getUserId());
-        logger.info("fetched contacts:{} ",contacts);
-        model.addAttribute("contacts", contacts);
+        Page<Contacts> pageContact = contactService.getByUser(user,page,size,sortBy,direction);
+        logger.info("fetched contacts:{} ",pageContact);
+        model.addAttribute("page", page);
+        model.addAttribute("size", AppConstants.PAGE_SIZE);
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("direction", direction);
+
+        model.addAttribute("pageContact", pageContact);
         return "user/contacts";
+    }
+
+    //Search handler 
+
+    @RequestMapping("/search")
+    public String searchHandler(
+        @RequestParam("field") String field,
+        @RequestParam("keyword") String value
+    ){
+        logger.info("field {} keyword {}", field, value);
+        return "user/search";
     }
     
 
