@@ -70,20 +70,27 @@ public class ContactServiceImpl implements ContactServices{
     }
 
     @Override
-    public Page<Contacts> searchByName(String nameKeyword, int size, int page, String sortBy, String direction) {
+    public Page<Contacts> searchByName(String nameKeyword, int size, int page, String sortBy, String direction, User user) {
         
         Sort sort = direction.equals("desc")? Sort.by(sortBy).descending(): Sort.by(sortBy).ascending();
         var pageable = PageRequest.of(page, size, sort);
-        return contactRepo.findByNameContaining(nameKeyword, pageable);
+        return contactRepo.findByUserAndNameContaining(user,nameKeyword, pageable);
     }
 
     @Override
-    public Page<Contacts> searchByPhoneNumber(String phoneNumber, int size, int page, String sortBy, String direction) {
+    public Page<Contacts> searchByPhoneNumber(String phoneNumberKeyword, int size, int page, String sortBy, String direction, User user) {
         
+        Sort sort = direction.equals("desc")? Sort.by(sortBy).descending(): Sort.by(sortBy).ascending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepo.findByUserAndPhoneNumberContaining(user,phoneNumberKeyword, pageable);
     }
 
     @Override
-    public Page<Contacts> searchByEmail(String email, int size, int page, String sortBy, String direction) {
+    public Page<Contacts> searchByEmail(String emailKeyword, int size, int page, String sortBy, String direction, User user) {
+
+        Sort sort = direction.equals("desc")? Sort.by(sortBy).descending(): Sort.by(sortBy).ascending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepo.findByUserAndEmailContaining(user,emailKeyword, pageable);
         
     }
 
