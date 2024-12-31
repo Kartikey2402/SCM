@@ -132,7 +132,7 @@
                         </tbody>
                     </table>
                     <!-- pagination component -->
-                    <div th:unless="pageContact.isEmpty" class="pagination_container p-4 text-center">
+                    <div th:unless="${pageContact.isEmpty}" class="pagination_container p-4 text-center">
                         <nav aria-label="Page navigation example">
                             <ul class="inline-flex -space-x-px text-base h-10">
                                 <li th:unless="${pageContact.isFirst}">
@@ -154,7 +154,7 @@
                             </ul>
                         </nav>
                     </div>
-                    <h1 class="text-center p-3 text-2xl" th:if="pageContact.isEmpty">No Results Found...</h1>
+                    <h1 class="text-center p-3 text-2xl" th:if="${pageContact.isEmpty}">No Results Found...</h1>
 
                 </div>
 

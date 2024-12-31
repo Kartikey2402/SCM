@@ -60,7 +60,7 @@ view contacts
                              <button type="submit" class="px-4 py-1.5 bg-blue-600 text-white rounded-md">Search</button>
                         </div>
                         </form>
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <table th:if="pageContact.isEmpty" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -129,7 +129,7 @@ view contacts
                             </tbody>
                         </table>
                         <!-- pagination component -->
-                        <div class="pagination_container p-4 text-center">
+                        <div th:unless="${pageContact.isEmpty}" class="pagination_container p-4 text-center">
                             <nav aria-label="Page navigation example">
                                 <ul class="inline-flex -space-x-px text-base h-10">
                                     <li th:unless="${pageContact.isFirst}">
@@ -150,6 +150,7 @@ view contacts
                                 </ul>
                             </nav>
                         </div>
+                        <h1 class="text-center p-3 text-2xl" th:if="${pageContact.isEmpty}">No Results Found...</h1>
 
                     </div>
 
