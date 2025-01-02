@@ -109,7 +109,7 @@ public class ContactController {
         .content("You have successfully added a new contact")
         .type(MessageType.green)
         .build());
-        return "redirect:/user/contacts/add";
+        return "redirect:/user/contact/add";
     }
 
     // view contacts
