@@ -6,6 +6,7 @@ view contacts
     <title>All Contacts</title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{'/css/output.css'}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
 <body>
@@ -22,6 +23,7 @@ view contacts
 
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
+                        <div th:replace="~{message::messageBox}"></div>
                         <form
                         th:object="${contactSearchForm}"  
                         th:action="@{'/user/contact/search'}">
@@ -111,12 +113,20 @@ view contacts
                                     </td>
                                     <td class="px-6 py-4">
                                         <div>
-                                            <a href="">
+                                            <!-- Delete Contact -->
+                                            <!-- <a th:href="@{'/user/contact/delete/'+*{id}}">
                                                 <i class="fa-solid w-6 h-6 fa-trash"></i>
-                                            </a>
-                                            <a href="">
+                                            </a> -->
+                                            <button th:onclick="deleteContact([[${c.id}]])">
+                                                <i class="fa-solid w-6 h-6 fa-trash"></i>
+                                            </button>
+                                           
+                                            <!-- Update Contact -->
+                                            <a th:href="@{'/user/contact/view/'+*{id}}">
                                                 <i class="fa-solid w-6 h-6 fa-pen"></i>
                                             </a>
+
+                                            <!-- View Contact Details -->
                                             <button th:data-id="${c.id}" th:onclick="loadContactData(this.getAttribute('data-id'))">
                                                 <i class="fa-solid w-6 h-6 fa-eye"></i>
                                             </button>
@@ -163,6 +173,7 @@ view contacts
     <script th:src="@{'/js/contacts.js'}">
         console.log("This is dashBoard page");
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

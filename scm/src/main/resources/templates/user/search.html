@@ -5,6 +5,7 @@
     <title>Search Contacts</title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{'/css/output.css'}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
 <body>
@@ -22,6 +23,7 @@
 
 
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
+                    <div th:replace="~{message::messageBox}"></div>
                     <form
                     th:object="${contactSearchForm}"  
                     th:action="@{'/user/contact/search'}">
@@ -114,9 +116,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div>
-                                        <a href="">
+                                        <button th:onclick="deleteContact([[${c.id}]])">
                                             <i class="fa-solid w-6 h-6 fa-trash"></i>
-                                        </a>
+                                        </button>
                                         <a href="">
                                             <i class="fa-solid w-6 h-6 fa-pen"></i>
                                         </a>
@@ -166,6 +168,7 @@
     <script th:src="@{'/js/contacts.js'}">
         
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
