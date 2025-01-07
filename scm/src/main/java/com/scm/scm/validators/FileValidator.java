@@ -22,11 +22,11 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
     public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
         
         if(file == null || file.isEmpty()){
-            logger.error("File is empty");
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("File cannot be empty").addConstraintViolation();
+            // logger.error("File is empty");
+            // context.disableDefaultConstraintViolation();
+            // context.buildConstraintViolationWithTemplate("File cannot be empty").addConstraintViolation();
 
-            return false;
+            return true;
         }
         logger.info("File size: " + file.getSize());
 

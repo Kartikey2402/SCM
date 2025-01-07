@@ -82,12 +82,6 @@ public class ContactController {
         // form -> contact
         User user = userService.getUserByEmail(username);
 
-        // processs the contaCT PICTURE
-
-        // upload krne ka code
-        String filename = UUID.randomUUID().toString();
-        String fileURL = imageService.uploadImage(contactForm.getContactImage(), filename);
-
         Contacts contacts = new Contacts();
         contacts.setName(contactForm.getName());
         contacts.setFavourite(contactForm.isFavourite());
@@ -98,8 +92,14 @@ public class ContactController {
         contacts.setUser(user);
         contacts.setLinkedInLink(contactForm.getLinkedInLink());
         contacts.setWebsiteLink(contactForm.getWebsiteLink());
-        contacts.setPicture(fileURL);
-        contacts.setCloudinaryImagePublicId(filename);
+
+        //processing the image
+        if((contactForm.getContactImage() != null) && (!contactForm.getContactImage().isEmpty())){
+            String filename = UUID.randomUUID().toString();
+            String fileURL = imageService.uploadImage(contactForm.getContactImage(), filename);
+            contacts.setPicture(fileURL);
+            contacts.setCloudinaryImagePublicId(filename);
+        }
         contactService.save(contacts);
         System.out.println(contactForm);
 

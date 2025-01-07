@@ -39,14 +39,6 @@ public class UserController {
     }
     
 
-    //user add contact page
-
-    //user view contacts
-
-    //user edit contact
-
-    // user delete contact
-
-    // user search contact
+    
 
 }

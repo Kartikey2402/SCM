@@ -116,7 +116,7 @@ public class MyController {
         System.out.println("User saved");
         // message = registration successfull
         // Add the message
-        Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
+        Message message = Message.builder().content("Registration Successful. Please verify the email.").type(MessageType.green).build();
         session.setAttribute("message", message);
         // redirect
 
