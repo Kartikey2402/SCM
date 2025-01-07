@@ -109,11 +109,15 @@ public class MyController {
         user.setPhoneNumber(userForm.getPhoneNumber());
         user.setPassword(userForm.getPassword());
         user.setAbout(userForm.getAbout());
-        user.setProfilePic("https://www.google.com/url?sa=i&url=https%3A%2F%2Farchive.org%2Fdetails%2Fwhatsapp-smiling-guy-i-accidentally-made&psig=AOvVaw2u_M3Sn5jxiZM-SCYZHuJ1&ust=1727982451358000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCYmLqy8IgDFQAAAAAdAAAAABAW");
+        user.setProfilePic("https://www.pngwing.com/en/free-png-mfrjz");
 
 
         User saveUser = userService.saveUser(user);
+        System.out.println("Saved User Profile Pic: " + saveUser.getProfilePic());
+
         System.out.println("User saved");
+        
+
         // message = registration successfull
         // Add the message
         Message message = Message.builder().content("Registration Successful. Please verify the email.").type(MessageType.green).build();

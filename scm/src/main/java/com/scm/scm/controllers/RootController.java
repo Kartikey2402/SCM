@@ -34,10 +34,9 @@ public class RootController {
 
         // database se user ko fetch kr skte hain
         User user = userService.getUserByEmail(username);
-        System.out.println(user);
-
         System.out.println(user.getName());
         System.out.println(user.getEmail());
+        System.out.println(user.getProfilePic());
         model.addAttribute("loggedInUser", user);
 
     }
