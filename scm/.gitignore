@@ -34,4 +34,4 @@ build/
 
 mysql_data/
 
-scm/src/main/resources/application.properties
+application.properties
